@@ -12,7 +12,7 @@ namespace LiveSplit.ShovelKnight {
 		public string ComponentName { get { return "Shovel Knight Autosplitter"; } }
 		public TimerModel Model { get; set; }
 		public IDictionary<string, Action> ContextMenuControls { get { return null; } }
-		internal static string[] keys = { "CurrentSplit", "State", "Level", "LevelLoad", "HP", "BossHP", "Gold", "Items", "Checkpoint" };
+		internal static string[] keys = { "CurrentSplit", "State", "Level", "LevelLoad", "Character", "HP", "BossHP", "Gold", "Mana", "ExtraItems", "Checkpoint" };
 		private Dictionary<string, string> currentValues = new Dictionary<string, string>();
 		private SplitterMemory mem;
 		private int currentSplit = -1, state = 0, lastLogCheck = 0;
@@ -69,11 +69,11 @@ namespace LiveSplit.ShovelKnight {
 					int? checkpoint = mem.Checkpoint();
 
 					switch (split) {
-						case SplitName.BossEndOverworld: shouldSplit = level == Level.BossEnd && levelLoading == Level.Overworld; break;
+						case SplitName.BossEndOverworld: shouldSplit = (level != Level.Overworld && levelLoading == Level.Overworld) || (mem.Character() == Character.SpecterKnight && level != Level.DarkReize && levelLoading == Level.DarkReize); break;
 						case SplitName.Checkpoint: shouldSplit = checkpoint > 0 && checkpoint > lastCheckpoint; break;
 
-						case SplitName.BlackKnight1Kill: shouldSplit = level == Level.Plains && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 12; break;
-						case SplitName.BlackKnight1Gold: shouldSplit = level == Level.Plains && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP == 12; break;
+						case SplitName.BlackKnight1Kill: shouldSplit = level == Level.Plains && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 12; break;
+						case SplitName.BlackKnight1Gold: shouldSplit = level == Level.Plains && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 12; break;
 
 						case SplitName.KingKnightKill: shouldSplit = level == Level.PridemoorKeep && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20; break;
 						case SplitName.KingKnightGold: shouldSplit = level == Level.PridemoorKeep && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP == 20; break;
@@ -201,6 +201,12 @@ namespace LiveSplit.ShovelKnight {
 								curr = hp.Value + " / " + mem.MaxHP().Value;
 							}
 							break;
+						case "Character":
+							Character? character = mem.Character();
+							if (character.HasValue) {
+								curr = character.Value.ToString();
+							}
+							break;
 						case "BossHP":
 							int? bossHP = mem.BossHP();
 							if (bossHP.HasValue) {
@@ -213,10 +219,16 @@ namespace LiveSplit.ShovelKnight {
 								curr = gold.Value.ToString();
 							}
 							break;
-						case "Items":
-							int? items = mem.Items();
+						case "Mana":
+							int? items = mem.Mana();
 							if (items.HasValue) {
 								curr = items.Value.ToString();
+							}
+							break;
+						case "ExtraItems":
+							int? extra = mem.ExtraItems();
+							if (extra.HasValue) {
+								curr = extra.Value.ToString();
 							}
 							break;
 						case "Checkpoint":

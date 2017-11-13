@@ -36,14 +36,21 @@ namespace LiveSplit.ShovelKnight {
 		}
 		public int? Gold() {
 			try {
-				return Program.Read<int>(Program.MainModule.BaseAddress, 0x8004b0, 0x2a8, 0x334);
+				return Program.Read<int>(Program.MainModule.BaseAddress, 0x8004b0, 0x80, 0xd4, 0x2d0);
 			} catch {
 				return null;
 			}
 		}
-		public int? Items() {
+		public int? ExtraItems() {
 			try {
-				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x8004b0, 0x2a8, 0x330);
+				return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FBBFC);
+			} catch {
+				return null;
+			}
+		}
+		public int? Mana() {
+			try {
+				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x8004b0, 0x80, 0xd4, 0x2cc);
 			} catch {
 				return null;
 			}

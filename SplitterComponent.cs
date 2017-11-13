@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Windows.Forms;
 using System.Xml;
 namespace LiveSplit.ShovelKnight {
@@ -12,11 +13,11 @@ namespace LiveSplit.ShovelKnight {
 		public string ComponentName { get { return "Shovel Knight Autosplitter"; } }
 		public TimerModel Model { get; set; }
 		public IDictionary<string, Action> ContextMenuControls { get { return null; } }
-		internal static string[] keys = { "CurrentSplit", "State", "Level", "LevelLoad", "Character", "HP", "BossHP", "Gold", "Mana", "ExtraItems", "Checkpoint" };
+		internal static string[] keys = { "CurrentSplit", "BossKills", "Level", "LevelLoad", "Character", "HP", "BossHP", "Gold", "Mana", "ExtraItems", "Checkpoint" };
 		private Dictionary<string, string> currentValues = new Dictionary<string, string>();
 		private SplitterMemory mem;
-		private int currentSplit = -1, state = 0, lastLogCheck = 0;
-		private int lastBossHP = 0, lastHP = 0, lastGold = 0, lastCheckpoint = 0;
+		private int currentSplit = -1, lastLogCheck = 0;
+		private int lastBossHP = 0, lastMaxBossHP = 0, lastHP = 0, lastGold = 0, lastCheckpoint = 0, bossKills = 0;
 		private Level lastLevel;
 		private bool hasLog = false;
 		private SplitterSettings settings;
@@ -70,7 +71,8 @@ namespace LiveSplit.ShovelKnight {
 
 					switch (split) {
 						case SplitName.BossEndOverworld: shouldSplit = (level != Level.Overworld && levelLoading == Level.Overworld) || (mem.Character() == Character.SpecterKnight && level != Level.DarkReize && levelLoading == Level.DarkReize); break;
-						case SplitName.Checkpoint: shouldSplit = checkpoint > 0 && checkpoint > lastCheckpoint; break;
+						case SplitName.BossGainHP: shouldSplit = bossHP >= 12 && maxBossHP >= 2 && lastMaxBossHP == 0; break;
+						case SplitName.Checkpoint: shouldSplit = checkpoint > 0 && checkpoint > lastCheckpoint && lastCheckpoint != 0; break;
 
 						case SplitName.BlackKnight1Kill: shouldSplit = level == Level.Plains && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 12; break;
 						case SplitName.BlackKnight1Gold: shouldSplit = level == Level.Plains && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 12; break;
@@ -90,21 +92,23 @@ namespace LiveSplit.ShovelKnight {
 						case SplitName.MoleKnightKill: shouldSplit = level == Level.LostCity && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20; break;
 						case SplitName.MoleKnightGold: shouldSplit = level == Level.LostCity && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP == 20; break;
 
+						case SplitName.TinkerKnightFirstKill:
+							if (bossKills == 0 && level == Level.ClockTower && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
+								bossKills++;
+								shouldSplit = true;
+							}
+							break;
 						case SplitName.TinkerKnightKill:
-							if (state < 2 && level == Level.ClockTower && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
-								state++;
-								shouldSplit = state == 2;
-							} else if (HP == 0 && lastHP > 0) {
-								state = 0;
+							if (bossKills < 2 && level == Level.ClockTower && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
+								bossKills++;
+								shouldSplit = bossKills == 2;
 							}
 							break;
 						case SplitName.TinkerKnightGold:
-							if (state < 2 && level == Level.ClockTower && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
-								state++;
-							} else if (state == 2 && level == Level.ClockTower && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP == 20) {
+							if (bossKills < 2 && level == Level.ClockTower && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
+								bossKills++;
+							} else if (bossKills == 2 && level == Level.ClockTower && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP == 20) {
 								shouldSplit = true;
-							} else if (HP == 0 && lastHP > 0) {
-								state = 0;
 							}
 							break;
 
@@ -122,11 +126,9 @@ namespace LiveSplit.ShovelKnight {
 							shouldSplit = pos.HasValue && level == Level.TowerOfFateAscent && pos.Value.X > 670 && pos.Value.Y < -185;
 							break;
 						case SplitName.BossRushKill:
-							if (state < 9 && level == Level.TowerOfFateAscent && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
-								state++;
-								shouldSplit = state == 9;
-							} else if (HP == 0 && lastHP > 0) {
-								state = 0;
+							if (bossKills < 9 && level == Level.TowerOfFateAscent && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
+								bossKills++;
+								shouldSplit = bossKills == 9;
 							}
 							break;
 
@@ -143,13 +145,21 @@ namespace LiveSplit.ShovelKnight {
 						case SplitName.ShieldKnightKill: shouldSplit = level == Level.ShieldKnight && mem.Character() == Character.SpecterKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20; break;
 					}
 
+					if (shouldSplit && split.ToString().IndexOf("Kill") > 0 && split != SplitName.TinkerKnightFirstKill && split != SplitName.TinkerKnightKill && split != SplitName.BossRushKill) {
+						bossKills++;
+					}
+
 					if (bossHP.HasValue) { lastBossHP = bossHP.Value; }
+					if (maxBossHP.HasValue) { lastMaxBossHP = maxBossHP.Value; }
 					if (HP.HasValue) { lastHP = HP.Value; }
 					if (gold.HasValue) { lastGold = gold.Value; }
 					if (checkpoint.HasValue) { lastCheckpoint = checkpoint.Value; }
 				}
 			}
 
+			if (level != lastLevel || lastHP == 0) {
+				bossKills = 0;
+			}
 			HandleSplit(shouldSplit, (lastLevel != Level.MainMenu && level == Level.MainMenu) || (lastLevel != Level.ProfileSelect && level == Level.ProfileSelect));
 
 			if (level.HasValue) { lastLevel = level.Value; }
@@ -181,8 +191,16 @@ namespace LiveSplit.ShovelKnight {
 					curr = prev;
 
 					switch (key) {
-						case "CurrentSplit": curr = currentSplit.ToString(); break;
-						case "State": curr = state.ToString(); break;
+						case "CurrentSplit":
+							if (currentSplit < 0) {
+								curr = "Not Running (-1)";
+							} else if (currentSplit < settings.Splits.Count) {
+								curr = settings.Splits[currentSplit].ToString() + " (" + currentSplit + ")";
+							} else {
+								curr = "(" + currentSplit.ToString() + ")";
+							}
+							break;
+						case "BossKills": curr = bossKills.ToString(); break;
 						case "Level":
 							Level? level = mem.LevelID();
 							if (level.HasValue) {
@@ -266,7 +284,6 @@ namespace LiveSplit.ShovelKnight {
 		}
 		public void OnReset(object sender, TimerPhase e) {
 			currentSplit = -1;
-			state = 0;
 			WriteLog("---------Reset----------------------------------");
 		}
 		public void OnResume(object sender, EventArgs e) {
@@ -277,20 +294,16 @@ namespace LiveSplit.ShovelKnight {
 		}
 		public void OnStart(object sender, EventArgs e) {
 			currentSplit = 0;
-			state = 0;
-			WriteLog("---------New Game-------------------------------");
+			WriteLog("---------New Game v" + Assembly.GetExecutingAssembly().GetName().Version.ToString() + "-------------------------------");
 		}
 		public void OnUndoSplit(object sender, EventArgs e) {
 			currentSplit--;
-			state = 0;
 		}
 		public void OnSkipSplit(object sender, EventArgs e) {
 			currentSplit++;
-			state = 0;
 		}
 		public void OnSplit(object sender, EventArgs e) {
 			currentSplit++;
-			state = 0;
 		}
 		private void WriteLog(string data) {
 			if (hasLog || !Console.IsOutputRedirected) {

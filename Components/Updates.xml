@@ -1,5 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <updates>
+	<update version="1.0.2">
+		<files>
+			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+		</files>
+		<changelog>
+			<change> Checkpoint fixes for Specter knight </change>
+			<change> Added split for first kill in the Tinker Knight fight </change>
+			<change> Added split for when boss gains HP </change>
+		</changelog>
+	</update>
 	<update version="1.0.1">
 		<files>
 			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>

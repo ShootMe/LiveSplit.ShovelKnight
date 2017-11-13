@@ -174,9 +174,11 @@ namespace LiveSplit.ShovelKnight {
 		[Description("Manual Split (Not Automatic)"), ToolTip("Does not split automatically. Use this for custom splits not yet defined.")]
 		ManualSplit,
 
-		[Description("Boss End to Overworld (Transition)"), ToolTip("Splits when going from the end sequence after a boss to the overworld map.")]
+		[Description("Boss End to Overworld (Transition)"), ToolTip("Splits when going from the end sequence after a boss to the overworld map")]
 		BossEndOverworld,
-		[Description("Checkpoint (Activated)"), ToolTip("Splits when activating a checkpoint in a map.")]
+		[Description("Boss Gaining HP (Boss Start)"), ToolTip("Splits when the boss starts gaining HP")]
+		BossGainHP,
+		[Description("Checkpoint (Activated)"), ToolTip("Splits when activating a checkpoint in a map")]
 		Checkpoint,
 
 		[Description("Black Knight - Plains (Kill)"), ToolTip("Splits when killing Black Knight in Plains")]
@@ -209,7 +211,9 @@ namespace LiveSplit.ShovelKnight {
 		[Description("Mole Knight - Lost City (Gold)"), ToolTip("Splits when getting gold from Mole Knight")]
 		MoleKnightGold,
 
-		[Description("Tinker Knight - Clock Tower (Kill)"), ToolTip("Splits when killing Tinker Knight")]
+		[Description("Tinker Knight - Clock Tower (Kill First)"), ToolTip("Splits when killing first phase of Tinker Knight")]
+		TinkerKnightFirstKill,
+		[Description("Tinker Knight - Clock Tower (Kill Both)"), ToolTip("Splits when killing both phases of Tinker Knight")]
 		TinkerKnightKill,
 		[Description("Tinker Knight - Clock Tower (Gold)"), ToolTip("Splits when getting gold from Tinker Knight")]
 		TinkerKnightGold,

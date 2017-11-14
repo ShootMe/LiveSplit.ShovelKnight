@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <updates>
+	<update version="1.0.4">
+		<files>
+			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+		</files>
+		<changelog>
+			<change> Made sure Enchantress splits happened at correct times </change>
+		</changelog>
+	</update>
 	<update version="1.0.3">
 		<files>
 			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>

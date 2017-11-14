@@ -132,9 +132,24 @@ namespace LiveSplit.ShovelKnight {
 							}
 							break;
 
-						case SplitName.Enchantress1Kill: shouldSplit = level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20; break;
-						case SplitName.Enchantress2Kill: shouldSplit = level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20; break;
-						case SplitName.Enchantress3Kill: shouldSplit = level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20; break;
+						case SplitName.Enchantress1Kill:
+							if (bossKills == 0 && level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
+								bossKills++;
+								shouldSplit = true;
+							}
+							break;
+						case SplitName.Enchantress2Kill:
+							if (bossKills < 2 && level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
+								bossKills++;
+								shouldSplit = bossKills == 2;
+							}
+							break;
+						case SplitName.Enchantress3Kill:
+							if (bossKills < 3 && level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20) {
+								bossKills++;
+								shouldSplit = bossKills == 3;
+							}
+							break;
 
 						case SplitName.BlackKnight2Kill: shouldSplit = level == Level.GemOverworld1 && mem.Character() == Character.PlagueKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20; break;
 						case SplitName.BlackKnight2Gold: shouldSplit = level == Level.GemOverworld1 && mem.Character() == Character.PlagueKnight && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP == 20; break;
@@ -145,7 +160,7 @@ namespace LiveSplit.ShovelKnight {
 						case SplitName.ShieldKnightKill: shouldSplit = level == Level.SepiaTowerShieldKnight && mem.Character() == Character.SpecterKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP == 20; break;
 					}
 
-					if (shouldSplit && split.ToString().IndexOf("Kill") > 0 && split != SplitName.TinkerKnightFirstKill && split != SplitName.TinkerKnightKill && split != SplitName.BossRushKill) {
+					if (shouldSplit && split.ToString().IndexOf("Kill") > 0 && split != SplitName.TinkerKnightFirstKill && split != SplitName.TinkerKnightKill && split != SplitName.BossRushKill && split != SplitName.Enchantress1Kill && split != SplitName.Enchantress2Kill && split != SplitName.Enchantress3Kill) {
 						bossKills++;
 					}
 

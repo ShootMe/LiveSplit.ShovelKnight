@@ -172,7 +172,7 @@ namespace LiveSplit.ShovelKnight {
 				}
 			}
 
-			if (level != lastLevel || lastHP == 0) {
+			if (level != lastLevel || (lastHP == 0 && level != Level.TowerOfFateEnchantress)) {
 				bossKills = 0;
 			}
 			HandleSplit(shouldSplit, (lastLevel != Level.MainMenu && level == Level.MainMenu) || (lastLevel != Level.ProfileSelect && level == Level.ProfileSelect));

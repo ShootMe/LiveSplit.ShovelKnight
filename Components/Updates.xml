@@ -1,5 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <updates>
+	<update version="1.0.3">
+		<files>
+			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+		</files>
+		<changelog>
+			<change> Fixes for Boss End to Overworld split </change>
+			<change> Fixes for Shield Knight split </change>
+		</changelog>
+	</update>
 	<update version="1.0.2">
 		<files>
 			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>

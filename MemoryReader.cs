@@ -79,7 +79,7 @@ namespace LiveSplit.Memory {
 					if (d == 0) {
 						i--;
 						break;
-					} else if (d > 127) {
+					} else if (d > 127 || (d < 0x20 && d > 0)) {
 						invalid = true;
 						break;
 					}

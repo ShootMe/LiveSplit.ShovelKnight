@@ -27,6 +27,13 @@ namespace LiveSplit.ShovelKnight {
 				return null;
 			}
 		}
+		public string LevelName() {
+			try {
+				return Program.ReadAscii((IntPtr)Program.Read<uint>(Program.MainModule.BaseAddress, 0x7FFA30) + 0x38);
+			} catch {
+				return null;
+			}
+		}
 		public Level? LevelIDLoading() {
 			try {
 				return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA40);
@@ -34,9 +41,14 @@ namespace LiveSplit.ShovelKnight {
 				return null;
 			}
 		}
+		//public void LevelIDLoading(Level level) {
+		//	try {
+		//		Program.Write<int>(Program.MainModule.BaseAddress, (int)level, 0x7FFA40);
+		//	} catch { }
+		//}
 		public int? Gold() {
 			try {
-				return Program.Read<int>(Program.MainModule.BaseAddress, 0x8004b0, 0x80, 0xd4, 0x2d0);
+				return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x2d0);
 			} catch {
 				return null;
 			}
@@ -50,55 +62,60 @@ namespace LiveSplit.ShovelKnight {
 		}
 		public int? Mana() {
 			try {
-				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x8004b0, 0x80, 0xd4, 0x2cc);
+				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x2cc);
 			} catch {
 				return null;
 			}
 		}
 		public PointF? Position() {
 			try {
-				return new PointF(Program.Read<float>(Program.MainModule.BaseAddress, 0x8004b0, 0x74, 0x24, 0xc), Program.Read<float>(Program.MainModule.BaseAddress, 0x8004b0, 0x74, 0x24, 0x10));
+				return new PointF(Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0xc), Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0x10));
 			} catch {
 				return null;
 			}
 		}
+		//public void Position(float x, float y) {
+		//	try {
+		//		Program.Write<float>(Program.MainModule.BaseAddress, x, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0xc);
+		//		Program.Write<float>(Program.MainModule.BaseAddress, y, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0x10);
+		//	} catch { }
+		//}
 		public int? HP() {
 			try {
-				return (int)Program.Read<float>(Program.MainModule.BaseAddress, 0x8004b0, 0x80, 0xd4, 0x1c);
+				return (int)Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x1c);
 			} catch {
 				return null;
 			}
 		}
 		//public void HP(int hp) {
 		//	try {
-		//		Program.Write<float>(Program.MainModule.BaseAddress, (float)hp, 0x8004b0, 0x80, 0xd4, 0x1c);
-		//		Program.Write<byte>(Program.MainModule.BaseAddress, (byte)50, 0x8004b0, 0x2a8, 0x330);
+		//		Program.Write<float>(Program.MainModule.BaseAddress, (float)hp, 0x7FFA30, 0x10, 0x78, 0xd4, 0x1c);
 		//	} catch { }
 		//}
 		public int? MaxHP() {
 			try {
-				return (int)Program.Read<float>(Program.MainModule.BaseAddress, 0x8004b0, 0x80, 0xd4, 0x20);
+				return (int)Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x20);
 			} catch {
 				return null;
 			}
 		}
 		public int? BossHP() {
 			try {
-				return (int)Program.Read<byte>(Program.MainModule.BaseAddress, 0x8004b0, 0x80, 0x20, 0xa8, 0x5e4, 0x41);
+				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x20, 0xa8, 0x5e4, 0x41);
 			} catch {
 				return null;
 			}
 		}
 		public int? BossMaxHP() {
 			try {
-				return (int)Program.Read<byte>(Program.MainModule.BaseAddress, 0x8004b0, 0x80, 0x20, 0xa8, 0x5e4, 0x40);
+				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x20, 0xa8, 0x5e4, 0x40);
 			} catch {
 				return null;
 			}
 		}
 		public int? Checkpoint() {
 			try {
-				return (int)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FC940);
+				return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FC940);
 			} catch {
 				return null;
 			}
@@ -131,43 +148,126 @@ namespace LiveSplit.ShovelKnight {
 		KingKnight = 3
 	}
 	public enum Level {
-		Plains = 11,
+		PlainsOfPassage = 11,
 		PridemoorKeep = 12,
 		LichYard = 13,
 		Explodatorium = 14,
 		IronWhale = 15,
 		LostCity = 16,
-		ClockTower = 17,
+		ClockworkTower = 17,
 		StrandedShip = 18,
 		FlyingMachine = 19,
 		TowerOfFateEntrance = 20,
 		TowerOfFateAscent = 21,
 		TowerOfFateEnchantress = 22,
 		Village = 23,
-		DarkReize = 24,
+		DarkVillage = 24,
 		ArmorOutpost = 25,
 		TroupplePond = 26,
 		HallOfChampions = 27,
-		BossEnd = 28,
+		DreamSequence = 28,
+		Arena = 29, //Doesn't Exist
+		Battleground = 30, //Doesn't Exist
 		Shortcut = 31,
-		ShieldKnight = 38,
+		Event1 = 32, //Doesn't Exist
+		Battletoads = 33,
+		BattletoadsBattleStart = 34,
+		BattletoadsLevel = 35,
+		BattletoadsIntro = 36,
+		SepiaTowerIntro = 37,
+		SepiaTowerShieldKnight = 38,
+		SepiaTowerOfDeath = 39,
+		SepiaCampFire = 40,
 		GemOverworld1 = 41,
 		GemOverworld2 = 42,
 		ForestOfPhasing = 43,
 		KnucklersQuarry = 44,
 		FrigidFlight = 45,
-		BlackKnightOverworld = 46,
-		PhantomStrikerOverworld = 47,
-		ReizeOverworld = 48,
-		BazOverworld = 50,
-		OverworldKnight1 = 52,
-		OverworldKnight2 = 53,
+		EncounterBlackKnight = 46,
+		EncounterPhantomStriker = 47,
+		EncounterReize = 48,
+		EncounterDarkReize = 49, //Doesn't Exist
+		EncounterBaz = 50,
+		EncounterKratos = 51, //Doesn't Exist
+		EncounterKnight1 = 52,
+		EncounterKnight2 = 53,
+		Challenge01 = 54,
+		Challenge02 = 55,
+		Challenge03 = 56, //Doesn't Exist
+		Challenge04 = 57,
+		Challenge05 = 58,
+		Challenge06 = 59,
+		Challenge07 = 60,
+		Challenge08 = 61, //Doesn't Exist
+		Challenge09 = 62, //Doesn't Exist
+		Challenge10 = 63,
+		Challenge11 = 64, //Doesn't Exist
+		Challenge12 = 65, //Doesn't Exist
+		Challenge13 = 66, //Doesn't Exist
+		Challenge14 = 67, //Doesn't Exist
+		Challenge15 = 68, //Doesn't Exist
+		Challenge16 = 69,
+		Challenge17 = 70, //Doesn't Exist
+		Challenge18 = 71,
+		Challenge19 = 72,
+		Challenge20 = 73, //Doesn't Exist
+		Challenge21 = 74,
+		Challenge22 = 75,
+		Challenge23 = 76,
+		Challenge24 = 77,
+		Challenge25 = 78,
+		Challenge26 = 79,
+		Challenge27 = 80,
+		Challenge28 = 81,
+		Challenge29 = 82,
+		Challenge30 = 83,
+		Challenge31 = 84,
+		Challenge32 = 85,
+		Challenge33 = 86,
+		Challenge34 = 87,
+		Challenge35 = 88,
+		Challenge36 = 89,
+		Challenge37 = 90,
+		Challenge38 = 91,
+		Challenge39 = 92,
+		Challenge40 = 93,
+		Challenge41 = 94, //Doesn't Exist
+		AmbiioChallenge01 = 161, //Doesn't Exist
+		AmbiioChallenge02 = 162, //Doesn't Exist
+		AmbiioChallenge03 = 163, //Doesn't Exist
+		AmbiioChallenge04 = 164, //Doesn't Exist
+		AmbiioChallenge05 = 165, //Doesn't Exist
+		AmbiioChallenge06 = 166, //Doesn't Exist
+		AmbiioChallenge07 = 167, //Doesn't Exist
+		AmbiioChallenge08 = 168, //Doesn't Exist
+		AmbiioChallenge09 = 169, //Doesn't Exist
+		AmbiioChallenge10 = 170, //Doesn't Exist
+		AmbiioChallenge11 = 171, //Doesn't Exist
+		AmbiioChallenge12 = 172, //Doesn't Exist
+		AmbiioChallenge13 = 173, //Doesn't Exist
+		AmbiioChallenge14 = 174, //Doesn't Exist
+		AmbiioChallenge15 = 175, //Doesn't Exist
+		AmbiioChallenge16 = 176, //Doesn't Exist
+		AmbiioChallenge17 = 177, //Doesn't Exist
+		AmbiioChallenge18 = 178, //Doesn't Exist
+		AmbiioChallenge19 = 179, //Doesn't Exist
+		AmbiioChallenge20 = 180, //Doesn't Exist
+		CompanyLogo = 186,
 		MainMenu = 187,
 		ProfileSelect = 188,
 		Overworld = 189,
-		CheckpointScreen = 190,
+		RespawnScreen = 190,
+		GameOver1 = 191,
+		HallOfHonor = 192,
+		GameOver2 = 193,
+		RescaleScreen = 194,
 		IntroCinematic = 195,
 		Feats = 196,
+		ChallengeSelect = 197,
+		BodySwap = 198,
+		CreditsShovelKnight = 199,
+		CharacterSelect = 200,
+		SoundTest = 204,
 		None = 273
 	}
 	public enum SplitName {

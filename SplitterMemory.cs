@@ -13,33 +13,17 @@ namespace LiveSplit.ShovelKnight {
 			lastHooked = DateTime.MinValue;
 		}
 
-		public Character? Character() {
-			try {
-				return (Character)Program.Read<int>(Program.MainModule.BaseAddress, 0x7f6708);
-			} catch {
-				return null;
-			}
+		public Character Character() {
+			return (Character)Program.Read<int>(Program.MainModule.BaseAddress, 0x7f6708);
 		}
-		public Level? LevelID() {
-			try {
-				return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA3C);
-			} catch {
-				return null;
-			}
+		public Level LevelID() {
+			return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA3C);
 		}
 		public string LevelName() {
-			try {
-				return Program.ReadAscii((IntPtr)Program.Read<uint>(Program.MainModule.BaseAddress, 0x7FFA30) + 0x38);
-			} catch {
-				return null;
-			}
+			return Program.ReadAscii((IntPtr)Program.Read<uint>(Program.MainModule.BaseAddress, 0x7FFA30) + 0x38);
 		}
-		public Level? LevelIDLoading() {
-			try {
-				return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA40);
-			} catch {
-				return null;
-			}
+		public Level LevelIDLoading() {
+			return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA40);
 		}
 		//public void LevelIDLoading(Level level) {
 		//	try {
@@ -53,12 +37,8 @@ namespace LiveSplit.ShovelKnight {
 				return null;
 			}
 		}
-		public int? ExtraItems() {
-			try {
-				return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FBBFC);
-			} catch {
-				return null;
-			}
+		public int ExtraItems() {
+			return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FBBFC);
 		}
 		public int? Mana() {
 			try {
@@ -113,12 +93,8 @@ namespace LiveSplit.ShovelKnight {
 				return null;
 			}
 		}
-		public int? Checkpoint() {
-			try {
-				return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FC940);
-			} catch {
-				return null;
-			}
+		public int Checkpoint() {
+			return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FC940);
 		}
 
 		public bool HookProcess() {
@@ -178,8 +154,8 @@ namespace LiveSplit.ShovelKnight {
 		SepiaTowerShieldKnight = 38,
 		SepiaTowerOfDeath = 39,
 		SepiaCampFire = 40,
-		GemOverworld1 = 41,
-		GemOverworld2 = 42,
+		EnocunterGem1 = 41,
+		EncounterGem2 = 42,
 		ForestOfPhasing = 43,
 		KnucklersQuarry = 44,
 		FrigidFlight = 45,
@@ -232,6 +208,18 @@ namespace LiveSplit.ShovelKnight {
 		Challenge39 = 92,
 		Challenge40 = 93,
 		Challenge41 = 94, //Doesn't Exist
+		Challenge42 = 95, //Doesn't Exist
+		Challenge43 = 96, //Doesn't Exist
+		Challenge44 = 97, //Doesn't Exist
+		Challenge45 = 98, //Doesn't Exist
+		Challenge46 = 99, //Doesn't Exist
+		Challenge47 = 100, //Doesn't Exist
+		Challenge48 = 101, //Doesn't Exist
+		Challenge49 = 102, //Doesn't Exist
+		Challenge50 = 103, //Doesn't Exist
+		ClockworkTower2 = 158, //King - Doesn't work
+		FlyingMachine2 = 159, //King - Doesn't work
+		StrandedShip2 = 160,
 		AmbiioChallenge01 = 161, //Doesn't Exist
 		AmbiioChallenge02 = 162, //Doesn't Exist
 		AmbiioChallenge03 = 163, //Doesn't Exist
@@ -252,6 +240,11 @@ namespace LiveSplit.ShovelKnight {
 		AmbiioChallenge18 = 178, //Doesn't Exist
 		AmbiioChallenge19 = 179, //Doesn't Exist
 		AmbiioChallenge20 = 180, //Doesn't Exist
+		AmbiioCoopChallenge1 = 181, //Doesn't Exist
+		AmbiioCoopChallenge2 = 182, //Doesn't Exist
+		AmbiioCoopChallenge3 = 183, //Doesn't Exist
+		AmbiioCoopChallenge4 = 184, //Doesn't Exist
+		AmbiioCoopChallenge5 = 185, //Doesn't Exist
 		CompanyLogo = 186,
 		MainMenu = 187,
 		ProfileSelect = 188,
@@ -274,8 +267,10 @@ namespace LiveSplit.ShovelKnight {
 		[Description("Manual Split (Not Automatic)"), ToolTip("Does not split automatically. Use this for custom splits not yet defined.")]
 		ManualSplit,
 
-		[Description("Boss End to Overworld (Transition)"), ToolTip("Splits when going from the end sequence after a boss to the overworld map")]
+		[Description("Return to Overworld / Hub (Transition)"), ToolTip("Splits when going back to the overworld / hub map at any point")]
 		BossEndOverworld,
+		[Description("Dream to Hub (Specter Knight)"), ToolTip("Splits when going back to the overworld / hub map from the memory sequence")]
+		MemoryOverworld,
 		[Description("Boss Gaining HP (Boss Start)"), ToolTip("Splits when the boss starts gaining HP")]
 		BossGainHP,
 		[Description("Checkpoint (Activated)"), ToolTip("Splits when activating a checkpoint in a map")]
@@ -333,16 +328,16 @@ namespace LiveSplit.ShovelKnight {
 		[Description("Black Knight - Tower of Fate (Gold)"), ToolTip("Splits when getting gold from Black Knight in Tower of Fate Entrance")]
 		BlackKnight3Gold,
 
-		[Description("Tower of Fate - Ascent (Reach Boss Rush)"), ToolTip("Splits when reaching the boss rush in the Tower of Fate Ascent")]
+		[Description("Ascent Boss Rush - Tower of Fate (Reach Room)"), ToolTip("Splits when reaching the boss rush in the Tower of Fate Ascent")]
 		BossRushReach,
-		[Description("Tower of Fate - Acent (Boss Rush Kill)"), ToolTip("Splits when killing all bosses in Tower of Fate Ascent")]
+		[Description("Ascent Boss Rush - Tower of Fate (Kill)"), ToolTip("Splits when killing all bosses in Tower of Fate Ascent")]
 		BossRushKill,
 
 		[Description("Enchantress 1 - Tower of Fate (Kill)"), ToolTip("Splits when killing Enchantress 1")]
 		Enchantress1Kill,
-		[Description("Enchantress 2 - Tower of Fate (Kill)"), ToolTip("Splits when killing Enchantress 2")]
+		[Description("Enchantress 2 / Nightmare Reize - Tower of Fate (Kill)"), ToolTip("Splits when killing Enchantress 2 / Nightmare Reize")]
 		Enchantress2Kill,
-		[Description("Enchantress 3 - Tower of Fate (Kill)"), ToolTip("Splits when killing Enchantress 3")]
+		[Description("Enchantress 3 - Plague Knight (Kill)"), ToolTip("Splits when killing Enchantress 3")]
 		Enchantress3Kill,
 
 		[Description("Black Knight 2 - Plague Knight (Kill)"), ToolTip("Splits when killing Black Knight 2")]

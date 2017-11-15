@@ -54,8 +54,8 @@ namespace LiveSplit.ShovelKnight {
 		}
 		private void HandleSplits() {
 			bool shouldSplit = false;
-			Level? level = mem.LevelID();
-			Level? levelLoading = mem.LevelIDLoading();
+			Level level = mem.LevelID();
+			Level levelLoading = mem.LevelIDLoading();
 
 			if (currentSplit == -1) {
 				shouldSplit = level == Level.ProfileSelect && levelLoading == Level.IntroCinematic;
@@ -67,10 +67,11 @@ namespace LiveSplit.ShovelKnight {
 					int? maxBossHP = mem.BossMaxHP();
 					int? HP = mem.HP();
 					int? gold = mem.Gold();
-					int? checkpoint = mem.Checkpoint();
+					int checkpoint = mem.Checkpoint();
 
 					switch (split) {
-						case SplitName.BossEndOverworld: shouldSplit = (levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld) || (mem.Character() == Character.SpecterKnight && levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage); break;
+						case SplitName.BossEndOverworld: shouldSplit = (levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld) || levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage; break;
+						case SplitName.MemoryOverworld: shouldSplit = (level == Level.SepiaTowerIntro || level == Level.SepiaTowerOfDeath || level == Level.SepiaCampFire || level == Level.SepiaTowerShieldKnight) && ((levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld) || (levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage)); break;
 						case SplitName.BossGainHP: shouldSplit = bossHP >= 12 && maxBossHP >= 2 && lastMaxBossHP == 0; break;
 						case SplitName.Checkpoint: shouldSplit = checkpoint > 0 && checkpoint > lastCheckpoint && lastCheckpoint != 0; break;
 
@@ -151,8 +152,8 @@ namespace LiveSplit.ShovelKnight {
 							}
 							break;
 
-						case SplitName.BlackKnight2Kill: shouldSplit = level == Level.GemOverworld1 && mem.Character() == Character.PlagueKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.BlackKnight2Gold: shouldSplit = level == Level.GemOverworld1 && mem.Character() == Character.PlagueKnight && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.BlackKnight2Kill: shouldSplit = level == Level.EnocunterGem1 && mem.Character() == Character.PlagueKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
+						case SplitName.BlackKnight2Gold: shouldSplit = level == Level.EnocunterGem1 && mem.Character() == Character.PlagueKnight && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
 
 						case SplitName.DarkReizeKill: shouldSplit = level == Level.DarkVillage && mem.Character() == Character.SpecterKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
 						case SplitName.DarkReizeGold: shouldSplit = level == Level.DarkVillage && mem.Character() == Character.SpecterKnight && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
@@ -168,7 +169,7 @@ namespace LiveSplit.ShovelKnight {
 					if (maxBossHP.HasValue) { lastMaxBossHP = maxBossHP.Value; }
 					if (HP.HasValue) { lastHP = HP.Value; }
 					if (gold.HasValue) { lastGold = gold.Value; }
-					if (checkpoint.HasValue) { lastCheckpoint = checkpoint.Value; }
+					lastCheckpoint = checkpoint;
 				}
 			}
 
@@ -177,8 +178,8 @@ namespace LiveSplit.ShovelKnight {
 			}
 			HandleSplit(shouldSplit, (lastLevel != Level.MainMenu && level == Level.MainMenu) || (lastLevel != Level.ProfileSelect && level == Level.ProfileSelect));
 
-			if (level.HasValue) { lastLevel = level.Value; }
-			if (levelLoading.HasValue) { lastLevelLoading = levelLoading.Value; }
+			lastLevel = level;
+			lastLevelLoading = levelLoading;
 		}
 		private void HandleSplit(bool shouldSplit, bool shouldReset = false) {
 			if (shouldReset) {
@@ -217,29 +218,16 @@ namespace LiveSplit.ShovelKnight {
 							}
 							break;
 						case "BossKills": curr = bossKills.ToString(); break;
-						case "Level":
-							Level? level = mem.LevelID();
-							if (level.HasValue) {
-								curr = level.Value.ToString();
-							}
-							break;
+						case "Level": curr = mem.LevelID().ToString(); break;
 						case "LevelName": curr = mem.LevelName(); break;
-						case "LevelLoad":
-							Level? levelLoad = mem.LevelIDLoading();
-							if (levelLoad.HasValue) {
-								curr = levelLoad.Value.ToString();
-							}
-							break;
+						case "LevelLoad": curr = mem.LevelIDLoading().ToString(); break;
+						case "Character": curr = mem.Character().ToString(); break;
+						case "ExtraItems": curr = mem.ExtraItems().ToString(); break;
+						case "Checkpoint": curr = mem.Checkpoint().ToString(); break;
 						case "HP":
 							int? hp = mem.HP();
 							if (hp.HasValue) {
 								curr = hp.Value + " / " + mem.MaxHP().Value;
-							}
-							break;
-						case "Character":
-							Character? character = mem.Character();
-							if (character.HasValue) {
-								curr = character.Value.ToString();
 							}
 							break;
 						case "BossHP":
@@ -258,18 +246,6 @@ namespace LiveSplit.ShovelKnight {
 							int? items = mem.Mana();
 							if (items.HasValue) {
 								curr = items.Value.ToString();
-							}
-							break;
-						case "ExtraItems":
-							int? extra = mem.ExtraItems();
-							if (extra.HasValue) {
-								curr = extra.Value.ToString();
-							}
-							break;
-						case "Checkpoint":
-							int? cp = mem.Checkpoint();
-							if (cp.HasValue) {
-								curr = cp.Value.ToString();
 							}
 							break;
 						case "Pos":

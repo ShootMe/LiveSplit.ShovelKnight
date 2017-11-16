@@ -71,94 +71,95 @@ namespace LiveSplit.ShovelKnight {
 
 					switch (split) {
 						case SplitName.BossEndOverworld: shouldSplit = (levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld) || levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage; break;
+						case SplitName.EnterLevel: shouldSplit = (levelLoading != Level.None && levelLoading != Level.MainMenu && levelLoading != Level.CompanyLogo && lastLevelLoading == Level.None) && (level == Level.Overworld || level == Level.DarkVillage); break;
 						case SplitName.MemoryOverworld: shouldSplit = (level == Level.SepiaTowerIntro || level == Level.SepiaTowerOfDeath || level == Level.SepiaCampFire || level == Level.SepiaTowerShieldKnight) && ((levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld) || (levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage)); break;
-						case SplitName.BossGainHP: shouldSplit = bossHP >= 12 && maxBossHP >= 2 && lastMaxBossHP == 0; break;
+						case SplitName.BossGainHP: shouldSplit = bossHP >= 10 && maxBossHP >= 2 && lastMaxBossHP == 0; break;
 						case SplitName.Checkpoint: shouldSplit = checkpoint > 0 && checkpoint > lastCheckpoint && lastCheckpoint != 0; break;
 
-						case SplitName.BlackKnight1Kill: shouldSplit = level == Level.PlainsOfPassage && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.BlackKnight1Gold: shouldSplit = level == Level.PlainsOfPassage && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.BlackKnight1Kill: shouldSplit = level == Level.PlainsOfPassage && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.BlackKnight1Gold: shouldSplit = level == Level.PlainsOfPassage && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.KingKnightKill: shouldSplit = level == Level.PridemoorKeep && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.KingKnightGold: shouldSplit = level == Level.PridemoorKeep && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.KingKnightKill: shouldSplit = level == Level.PridemoorKeep && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.KingKnightGold: shouldSplit = level == Level.PridemoorKeep && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.SpecterKnightKill: shouldSplit = level == Level.LichYard && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.SpecterKnightGold: shouldSplit = level == Level.LichYard && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.SpecterKnightKill: shouldSplit = level == Level.LichYard && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.SpecterKnightGold: shouldSplit = level == Level.LichYard && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.PlagueKnightKill: shouldSplit = level == Level.Explodatorium && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.PlagueKnightGold: shouldSplit = level == Level.Explodatorium && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.PlagueKnightKill: shouldSplit = level == Level.Explodatorium && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.PlagueKnightGold: shouldSplit = level == Level.Explodatorium && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.TreasureKnightKill: shouldSplit = level == Level.IronWhale && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.TreasureKnightGold: shouldSplit = level == Level.IronWhale && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.TreasureKnightKill: shouldSplit = level == Level.IronWhale && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.TreasureKnightGold: shouldSplit = level == Level.IronWhale && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.MoleKnightKill: shouldSplit = level == Level.LostCity && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.MoleKnightGold: shouldSplit = level == Level.LostCity && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.MoleKnightKill: shouldSplit = level == Level.LostCity && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.MoleKnightGold: shouldSplit = level == Level.LostCity && BossGold(bossHP, maxBossHP, HP, gold); break;
 
 						case SplitName.TinkerKnightFirstKill:
-							if (bossKills == 0 && level == Level.ClockworkTower && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10) {
+							if (bossKills == 0 && level == Level.ClockworkTower && BossKilled(bossHP, maxBossHP, HP)) {
 								bossKills++;
 								shouldSplit = true;
 							}
 							break;
 						case SplitName.TinkerKnightKill:
-							if (bossKills < 2 && level == Level.ClockworkTower && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10) {
+							if (bossKills < 2 && level == Level.ClockworkTower && BossKilled(bossHP, maxBossHP, HP)) {
 								bossKills++;
 								shouldSplit = bossKills == 2;
 							}
 							break;
 						case SplitName.TinkerKnightGold:
-							if (bossKills < 2 && level == Level.ClockworkTower && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10) {
+							if (bossKills < 2 && level == Level.ClockworkTower && BossKilled(bossHP, maxBossHP, HP)) {
 								bossKills++;
-							} else if (bossKills == 2 && level == Level.ClockworkTower && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10) {
+							} else if (bossKills == 2 && level == Level.ClockworkTower && BossGold(bossHP, maxBossHP, HP, gold)) {
 								shouldSplit = true;
 							}
 							break;
 
-						case SplitName.PolarKnightKill: shouldSplit = level == Level.StrandedShip && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.PolarKnightGold: shouldSplit = level == Level.StrandedShip && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.PolarKnightKill: shouldSplit = level == Level.StrandedShip && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.PolarKnightGold: shouldSplit = level == Level.StrandedShip && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.PropellerKnightKill: shouldSplit = level == Level.FlyingMachine && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.PropellerKnightGold: shouldSplit = level == Level.FlyingMachine && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.PropellerKnightKill: shouldSplit = level == Level.FlyingMachine && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.PropellerKnightGold: shouldSplit = level == Level.FlyingMachine && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.BlackKnight3Kill: shouldSplit = level == Level.TowerOfFateEntrance && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.BlackKnight3Gold: shouldSplit = level == Level.TowerOfFateEntrance && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.BlackKnight3Kill: shouldSplit = level == Level.TowerOfFateEntrance && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.BlackKnight3Gold: shouldSplit = level == Level.TowerOfFateEntrance && BossGold(bossHP, maxBossHP, HP, gold); break;
 
 						case SplitName.BossRushReach:
 							PointF? pos = mem.Position();
 							shouldSplit = pos.HasValue && level == Level.TowerOfFateAscent && pos.Value.X > 670 && pos.Value.Y < -185;
 							break;
 						case SplitName.BossRushKill:
-							if (bossKills < 9 && level == Level.TowerOfFateAscent && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10) {
+							if (bossKills < 9 && level == Level.TowerOfFateAscent && BossKilled(bossHP, maxBossHP, HP)) {
 								bossKills++;
 								shouldSplit = bossKills == 9;
 							}
 							break;
 
 						case SplitName.Enchantress1Kill:
-							if (bossKills == 0 && level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10) {
+							if (bossKills == 0 && level == Level.TowerOfFateEnchantress && BossKilled(bossHP, maxBossHP, HP)) {
 								bossKills++;
 								shouldSplit = true;
 							}
 							break;
 						case SplitName.Enchantress2Kill:
-							if (bossKills < 2 && level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10) {
+							if (bossKills < 2 && level == Level.TowerOfFateEnchantress && BossKilled(bossHP, maxBossHP, HP)) {
 								bossKills++;
 								shouldSplit = bossKills == 2;
 							}
 							break;
 						case SplitName.Enchantress3Kill:
-							if (bossKills < 3 && level == Level.TowerOfFateEnchantress && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10) {
+							if (bossKills < 3 && level == Level.TowerOfFateEnchantress && BossKilled(bossHP, maxBossHP, HP)) {
 								bossKills++;
 								shouldSplit = bossKills == 3;
 							}
 							break;
 
-						case SplitName.BlackKnight2Kill: shouldSplit = level == Level.EnocunterGem1 && mem.Character() == Character.PlagueKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.BlackKnight2Gold: shouldSplit = level == Level.EnocunterGem1 && mem.Character() == Character.PlagueKnight && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.BlackKnight2Kill: shouldSplit = level == Level.EnocunterGem1 && mem.Character() == Character.PlagueKnight && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.BlackKnight2Gold: shouldSplit = level == Level.EnocunterGem1 && mem.Character() == Character.PlagueKnight && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.DarkReizeKill: shouldSplit = level == Level.DarkVillage && mem.Character() == Character.SpecterKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
-						case SplitName.DarkReizeGold: shouldSplit = level == Level.DarkVillage && mem.Character() == Character.SpecterKnight && bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10; break;
+						case SplitName.DarkReizeKill: shouldSplit = level == Level.DarkVillage && mem.Character() == Character.SpecterKnight && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.DarkReizeGold: shouldSplit = level == Level.DarkVillage && mem.Character() == Character.SpecterKnight && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-						case SplitName.ShieldKnightKill: shouldSplit = level == Level.SepiaTowerShieldKnight && mem.Character() == Character.SpecterKnight && bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10; break;
+						case SplitName.ShieldKnightKill: shouldSplit = level == Level.SepiaTowerShieldKnight && mem.Character() == Character.SpecterKnight && BossKilled(bossHP, maxBossHP, HP); break;
 					}
 
 					if (shouldSplit && split.ToString().IndexOf("Kill") > 0 && split != SplitName.TinkerKnightFirstKill && split != SplitName.TinkerKnightKill && split != SplitName.BossRushKill && split != SplitName.Enchantress1Kill && split != SplitName.Enchantress2Kill && split != SplitName.Enchantress3Kill) {
@@ -180,6 +181,12 @@ namespace LiveSplit.ShovelKnight {
 
 			lastLevel = level;
 			lastLevelLoading = levelLoading;
+		}
+		private bool BossKilled(int? bossHP, int? maxBossHP, int? HP) {
+			return bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 10;
+		}
+		private bool BossGold(int? bossHP, int? maxBossHP, int? HP, int? gold) {
+			return bossHP == 0 && HP > 0 && gold > lastGold && maxBossHP >= 10;
 		}
 		private void HandleSplit(bool shouldSplit, bool shouldReset = false) {
 			if (shouldReset) {

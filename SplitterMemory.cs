@@ -269,6 +269,8 @@ namespace LiveSplit.ShovelKnight {
 
 		[Description("Return to Overworld / Hub (Transition)"), ToolTip("Splits when going back to the overworld / hub map at any point")]
 		BossEndOverworld,
+		[Description("Enter Level from Overworld / Hub (Transition)"), ToolTip("Splits when entering a level from the overworld / hub")]
+		EnterLevel,
 		[Description("Dream to Hub (Specter Knight)"), ToolTip("Splits when going back to the overworld / hub map from the memory sequence")]
 		MemoryOverworld,
 		[Description("Boss Gaining HP (Boss Start)"), ToolTip("Splits when the boss starts gaining HP")]

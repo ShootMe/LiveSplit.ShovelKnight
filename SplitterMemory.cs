@@ -271,7 +271,7 @@ namespace LiveSplit.ShovelKnight {
 		BossEndOverworld,
 		[Description("Enter Level from Overworld / Hub (Transition)"), ToolTip("Splits when entering a level from the overworld / hub")]
 		EnterLevel,
-		[Description("Dream to Hub (Specter Knight)"), ToolTip("Splits when going back to the overworld / hub map from the memory sequence")]
+		[Description("Memory to Hub (Specter Knight)"), ToolTip("Splits when going back to the overworld / hub map from the memory sequence")]
 		MemoryOverworld,
 		[Description("Boss Gaining HP (Boss Start)"), ToolTip("Splits when the boss starts gaining HP")]
 		BossGainHP,
@@ -337,9 +337,9 @@ namespace LiveSplit.ShovelKnight {
 
 		[Description("Enchantress 1 - Tower of Fate (Kill)"), ToolTip("Splits when killing Enchantress 1")]
 		Enchantress1Kill,
-		[Description("Enchantress 2 / Nightmare Reize - Tower of Fate (Kill)"), ToolTip("Splits when killing Enchantress 2 / Nightmare Reize")]
+		[Description("Enchantress 2 / Nightmare Reize / Plague of Shadows (Kill)"), ToolTip("Splits when killing Enchantress 2 / Nightmare Reize / Plague of Shadows")]
 		Enchantress2Kill,
-		[Description("Enchantress 3 - Plague Knight (Kill)"), ToolTip("Splits when killing Enchantress 3")]
+		[Description("Corrupted Essence - Tower of Fate (Kill)"), ToolTip("Splits when killing Corrupted Essence")]
 		Enchantress3Kill,
 
 		[Description("Black Knight 2 - Plague Knight (Kill)"), ToolTip("Splits when killing Black Knight 2")]

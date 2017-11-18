@@ -14,87 +14,58 @@ namespace LiveSplit.ShovelKnight {
 		}
 
 		public Character Character() {
-			return (Character)Program.Read<int>(Program.MainModule.BaseAddress, 0x7f6708);
+			return (Character)Program.Read<int>(Program.MainModule.BaseAddress, 0x7f6708).GetValueOrDefault(0);
 		}
 		public Level LevelID() {
-			return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA3C);
+			return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA3C).GetValueOrDefault(0);
 		}
 		public string LevelName() {
 			return Program.ReadAscii((IntPtr)Program.Read<uint>(Program.MainModule.BaseAddress, 0x7FFA30) + 0x38);
 		}
 		public Level LevelIDLoading() {
-			return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA40);
+			return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA40).GetValueOrDefault(0);
 		}
-		//public void LevelIDLoading(Level level) {
-		//	try {
-		//		Program.Write<int>(Program.MainModule.BaseAddress, (int)level, 0x7FFA40);
-		//	} catch { }
-		//}
+		public void LevelIDLoading(Level level) {
+			Program.Write<int>(Program.MainModule.BaseAddress, (int)level, 0x7FFA40);
+		}
 		public int? Gold() {
-			try {
-				return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x2d0);
-			} catch {
-				return null;
-			}
+			return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x2d0);
 		}
 		public int ExtraItems() {
-			return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FBBFC);
+			return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FBBFC).GetValueOrDefault(0);
 		}
 		public int? Mana() {
-			try {
-				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x2cc);
-			} catch {
-				return null;
-			}
+			return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x2cc);
 		}
 		public PointF? Position() {
-			try {
-				return new PointF(Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0xc), Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0x10));
-			} catch {
-				return null;
+			float? x = Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0xc);
+			float? y = Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0x10);
+			if (x.HasValue && y.HasValue) {
+				return new PointF(x.Value, y.Value);
 			}
+			return null;
 		}
 		//public void Position(float x, float y) {
-		//	try {
-		//		Program.Write<float>(Program.MainModule.BaseAddress, x, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0xc);
-		//		Program.Write<float>(Program.MainModule.BaseAddress, y, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0x10);
-		//	} catch { }
+		//	Program.Write<float>(Program.MainModule.BaseAddress, x, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0xc);
+		//	Program.Write<float>(Program.MainModule.BaseAddress, y, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0x10);
 		//}
 		public int? HP() {
-			try {
-				return (int)Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x1c);
-			} catch {
-				return null;
-			}
+			return (int?)Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x1c);
 		}
 		//public void HP(int hp) {
-		//	try {
-		//		Program.Write<float>(Program.MainModule.BaseAddress, (float)hp, 0x7FFA30, 0x10, 0x78, 0xd4, 0x1c);
-		//	} catch { }
+		//	Program.Write<float>(Program.MainModule.BaseAddress, (float)hp, 0x7FFA30, 0x10, 0x78, 0xd4, 0x1c);
 		//}
 		public int? MaxHP() {
-			try {
-				return (int)Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x20);
-			} catch {
-				return null;
-			}
+			return (int?)Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x20);
 		}
 		public int? BossHP() {
-			try {
-				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x20, 0xa8, 0x5e4, 0x41);
-			} catch {
-				return null;
-			}
+			return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x20, 0xa8, 0x5e4, 0x41);
 		}
 		public int? BossMaxHP() {
-			try {
-				return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x20, 0xa8, 0x5e4, 0x40);
-			} catch {
-				return null;
-			}
+			return Program.Read<byte>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0x20, 0xa8, 0x5e4, 0x40);
 		}
 		public int Checkpoint() {
-			return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FC940);
+			return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FC940).GetValueOrDefault(0);
 		}
 
 		public bool HookProcess() {

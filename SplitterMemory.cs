@@ -25,9 +25,9 @@ namespace LiveSplit.ShovelKnight {
 		public Level LevelIDLoading() {
 			return (Level)Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA40).GetValueOrDefault(0);
 		}
-		public void LevelIDLoading(Level level) {
-			Program.Write<int>(Program.MainModule.BaseAddress, (int)level, 0x7FFA40);
-		}
+		//public void LevelIDLoading(Level level) {
+		//	Program.Write<int>(Program.MainModule.BaseAddress, (int)level, 0x7FFA40);
+		//}
 		public int? Gold() {
 			return Program.Read<int>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x2d0);
 		}
@@ -48,6 +48,15 @@ namespace LiveSplit.ShovelKnight {
 		//public void Position(float x, float y) {
 		//	Program.Write<float>(Program.MainModule.BaseAddress, x, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0xc);
 		//	Program.Write<float>(Program.MainModule.BaseAddress, y, 0x7FFA30, 0x10, 0x78, 0x94, 0x24, 0x10);
+		//}
+		public bool Paused() {
+			return !Program.Read<bool>(Program.MainModule.BaseAddress, 0x7F55AC, 0x24).GetValueOrDefault(true);
+		}
+		public float? IFrameDuration() {
+			return Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x124);
+		}
+		//public void IFrameDuration(float time) {
+		//	Program.Write<float>(Program.MainModule.BaseAddress, time, 0x7FFA30, 0x10, 0x78, 0xd4, 0x124);
 		//}
 		public int? HP() {
 			return (int?)Program.Read<float>(Program.MainModule.BaseAddress, 0x7FFA30, 0x10, 0x78, 0xd4, 0x1c);
@@ -232,6 +241,19 @@ namespace LiveSplit.ShovelKnight {
 		CreditsShovelKnight = 199,
 		CharacterSelect = 200,
 		SoundTest = 204,
+		CreditsVillage = 205,
+		CreditsPridemoor = 206,
+		CreditsTrouppleKing = 207,
+		CreditsVillageOfDeath = 208,
+		CreditsIronWhale = 209,
+		CreditsExplodatorium = 210,
+		CreditsLostCity = 211,
+		CreditsD4D = 212,
+		CreditsFlyingMachine = 213,
+		CreditsClockworkTower = 214,
+		CreditsStrandedShip = 215,
+		CreditsDreamSequence1 = 216,
+		CreditsDreamSequence2 = 217,
 		None = 273
 	}
 	public enum SplitName {

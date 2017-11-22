@@ -14,7 +14,7 @@ namespace LiveSplit.ShovelKnight {
 		public TimerModel Model { get; set; }
 		public IDictionary<string, Action> ContextMenuControls { get { return null; } }
 		private static string LOGFILE = "_ShovelKnight.log";
-		internal static string[] keys = { "CurrentSplit", "BossKills", "Level", "LevelName", "LevelLoad", "Character", "HP", "BossHP", "Gold", "Mana", "ExtraItems", "Checkpoint" };
+		internal static string[] keys = { "CurrentSplit", "BossKills", "Level", "LevelName", "LevelLoad", "Character", "HP", "BossHP", "Gold", "Mana", "ExtraItems", "Checkpoint", "Paused" };
 		private Dictionary<string, string> currentValues = new Dictionary<string, string>();
 		private SplitterMemory mem;
 		private int currentSplit = -1, lastLogCheck = 0;
@@ -174,7 +174,7 @@ namespace LiveSplit.ShovelKnight {
 				}
 			}
 
-			if (level != lastLevel || (lastHP == 0 && level != Level.TowerOfFateEnchantress)) {
+			if ((level != lastLevel && level != Level.RespawnScreen && lastLevel != Level.RespawnScreen) || (lastHP == 0 && level != Level.TowerOfFateEnchantress && level != Level.RespawnScreen)) {
 				bossKills = 0;
 			}
 			HandleSplit(shouldSplit, (lastLevel != Level.MainMenu && level == Level.MainMenu) || (lastLevel != Level.ProfileSelect && level == Level.ProfileSelect));
@@ -231,6 +231,7 @@ namespace LiveSplit.ShovelKnight {
 						case "Character": curr = mem.Character().ToString(); break;
 						case "ExtraItems": curr = mem.ExtraItems().ToString(); break;
 						case "Checkpoint": curr = mem.Checkpoint().ToString(); break;
+						case "Paused": curr = mem.Paused().ToString(); break;
 						case "HP":
 							int? hp = mem.HP();
 							if (hp.HasValue) {
@@ -259,6 +260,12 @@ namespace LiveSplit.ShovelKnight {
 							PointF? pos = mem.Position();
 							if (pos.HasValue) {
 								curr = pos.Value.X.ToString("0") + "," + pos.Value.Y.ToString("0");
+							}
+							break;
+						case "IFrames":
+							float? time = mem.IFrameDuration();
+							if (time.HasValue) {
+								curr = time.Value.ToString("0");
 							}
 							break;
 					}

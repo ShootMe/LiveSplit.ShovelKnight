@@ -134,7 +134,7 @@ namespace LiveSplit.ShovelKnight {
 		SepiaTowerShieldKnight = 38,
 		SepiaTowerOfDeath = 39,
 		SepiaCampFire = 40,
-		EnocunterGem1 = 41,
+		EncounterGem1 = 41,
 		EncounterGem2 = 42,
 		ForestOfPhasing = 43,
 		KnucklersQuarry = 44,

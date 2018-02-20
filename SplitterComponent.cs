@@ -153,8 +153,8 @@ namespace LiveSplit.ShovelKnight {
 							}
 							break;
 
-						case SplitName.BlackKnight2Kill: shouldSplit = level == Level.EncounterBlackKnight && mem.Character() == Character.PlagueKnight && BossKilled(bossHP, maxBossHP, HP); break;
-						case SplitName.BlackKnight2Gold: shouldSplit = level == Level.EncounterBlackKnight && mem.Character() == Character.PlagueKnight && BossGold(bossHP, maxBossHP, HP, gold); break;
+						case SplitName.BlackKnight2Kill: shouldSplit = (level == Level.EncounterBlackKnight || level == Level.EncounterKnight1 || level == Level.EncounterKnight2 || level == Level.EncounterGem1 || level == Level.EncounterGem2) && mem.Character() == Character.PlagueKnight && BossKilled(bossHP, maxBossHP, HP); break;
+						case SplitName.BlackKnight2Gold: shouldSplit = (level == Level.EncounterBlackKnight || level == Level.EncounterKnight1 || level == Level.EncounterKnight2 || level == Level.EncounterGem1 || level == Level.EncounterGem2) && mem.Character() == Character.PlagueKnight && BossGold(bossHP, maxBossHP, HP, gold); break;
 
 						case SplitName.DarkReizeKill: shouldSplit = level == Level.DarkVillage && mem.Character() == Character.SpecterKnight && BossKilled(bossHP, maxBossHP, HP); break;
 						case SplitName.DarkReizeGold: shouldSplit = level == Level.DarkVillage && mem.Character() == Character.SpecterKnight && BossGold(bossHP, maxBossHP, HP, gold); break;

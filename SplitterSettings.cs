@@ -1,5 +1,4 @@
-﻿using LiveSplit.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
@@ -10,14 +9,12 @@ namespace LiveSplit.ShovelKnight {
 	public partial class SplitterSettings : UserControl {
 		public List<SplitName> Splits { get; private set; }
 		private bool isLoading;
-		private TimerModel model;
-		public SplitterSettings(TimerModel model) {
+		public SplitterSettings() {
 			isLoading = true;
 			InitializeComponent();
 
 			Splits = new List<SplitName>();
 			isLoading = false;
-			this.model = model;
 		}
 
 		public bool HasSplit(SplitName split) {

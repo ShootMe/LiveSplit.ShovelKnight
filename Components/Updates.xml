@@ -1,103 +1,111 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <updates>
-	<update version="1.1.4">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Fix Black Knight 2 in Plague Knight </change>
-		</changelog>
-	</update>
-	<update version="1.1.3">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Fix Black Knight 2 in Plague Knight </change>
-		</changelog>
-	</update>
-	<update version="1.1.2">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Fix for Enchantress splits if you died during </change>
-		</changelog>
-	</update>
-	<update version="1.1.1">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Better split descriptions for Plague Knight splits </change>
-		</changelog>
-	</update>
-	<update version="1.1.0">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Added split for entering a level from overworld / hub </change>
-		</changelog>
-	</update>
-	<update version="1.0.6">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Better Split Descriptions </change>
-			<change> Added split going from the dream sequences for specter knight back to the main hub </change>
-		</changelog>
-	</update>
-	<update version="1.0.5">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Fixes for Plague Knight boss fight </change>
-		</changelog>
-	</update>
-	<update version="1.0.4">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Made sure Enchantress splits happened at correct times </change>
-		</changelog>
-	</update>
-	<update version="1.0.3">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Fixes for Boss End to Overworld split </change>
-			<change> Fixes for Shield Knight split </change>
-		</changelog>
-	</update>
-	<update version="1.0.2">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Checkpoint fixes for Specter knight </change>
-			<change> Added split for first kill in the Tinker Knight fight </change>
-			<change> Added split for when boss gains HP </change>
-		</changelog>
-	</update>
-	<update version="1.0.1">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Fixes for various splits </change>
-		</changelog>
-	</update>
-	<update version="1.0.0">
-		<files>
-			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
-		</files>
-		<changelog>
-			<change> Initial Release </change>
-		</changelog>
-	</update>
+    <update version="1.1.5">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Update for King of Cards release </change>
+        </changelog>
+    </update>
+    <update version="1.1.4">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Fix Black Knight 2 in Plague Knight </change>
+        </changelog>
+    </update>
+    <update version="1.1.3">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Fix Black Knight 2 in Plague Knight </change>
+        </changelog>
+    </update>
+    <update version="1.1.2">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Fix for Enchantress splits if you died during </change>
+        </changelog>
+    </update>
+    <update version="1.1.1">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Better split descriptions for Plague Knight splits </change>
+        </changelog>
+    </update>
+    <update version="1.1.0">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Added split for entering a level from overworld / hub </change>
+        </changelog>
+    </update>
+    <update version="1.0.6">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Better Split Descriptions </change>
+            <change> Added split going from the dream sequences for specter knight back to the main hub </change>
+        </changelog>
+    </update>
+    <update version="1.0.5">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Fixes for Plague Knight boss fight </change>
+        </changelog>
+    </update>
+    <update version="1.0.4">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Made sure Enchantress splits happened at correct times </change>
+        </changelog>
+    </update>
+    <update version="1.0.3">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Fixes for Boss End to Overworld split </change>
+            <change> Fixes for Shield Knight split </change>
+        </changelog>
+    </update>
+    <update version="1.0.2">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Checkpoint fixes for Specter knight </change>
+            <change> Added split for first kill in the Tinker Knight fight </change>
+            <change> Added split for when boss gains HP </change>
+        </changelog>
+    </update>
+    <update version="1.0.1">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Fixes for various splits </change>
+        </changelog>
+    </update>
+    <update version="1.0.0">
+        <files>
+            <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+        </files>
+        <changelog>
+            <change> Initial Release </change>
+        </changelog>
+    </update>
 </updates>

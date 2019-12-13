@@ -83,9 +83,9 @@ namespace LiveSplit.ShovelKnight {
                     int checkpoint = mem.Checkpoint();
 
                     switch (split) {
-                        case SplitName.BossEndOverworld: shouldSplit = (levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel != Level.Overworld) || (levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage) || (levelLoading == Level.Glidewing && lastLevelLoading != Level.Glidewing); break;
+                        case SplitName.BossEndOverworld: shouldSplit = (levelLoading == Level.Overworld && lastLevel != Level.Overworld && lastLevel != Level.Glidewing) || (levelLoading == Level.DarkVillage && lastLevel != Level.DarkVillage) || (levelLoading == Level.Glidewing && lastLevel != Level.Glidewing); break;
                         case SplitName.EnterLevel: shouldSplit = (levelLoading != Level.None && levelLoading != Level.MainMenu && levelLoading != Level.CompanyLogo && lastLevelLoading == Level.None) && (level == Level.Overworld || level == Level.DarkVillage); break;
-                        case SplitName.MemoryOverworld: shouldSplit = (level == Level.SepiaTowerIntro || level == Level.SepiaTowerOfDeath || level == Level.SepiaCampFire || level == Level.SepiaTowerShieldKnight) && ((levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld) || (levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage)); break;
+                        case SplitName.MemoryOverworld: shouldSplit = (level == Level.SepiaTowerIntro || level == Level.SepiaTowerOfDeath || level == Level.SepiaCampFire || level == Level.SepiaTowerShieldKnight) && ((levelLoading == Level.Overworld && lastLevel != Level.Overworld) || (levelLoading == Level.DarkVillage && lastLevel != Level.DarkVillage)); break;
                         case SplitName.BossGainHP: shouldSplit = bossHP >= 10 && maxBossHP >= 2 && lastMaxBossHP == 0; break;
                         case SplitName.Checkpoint: shouldSplit = checkpoint > 0 && checkpoint > lastCheckpoint && lastCheckpoint != 0; break;
 

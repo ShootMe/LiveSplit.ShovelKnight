@@ -18,7 +18,7 @@ namespace LiveSplit.ShovelKnight {
         private Dictionary<LogObject, string> currentValues = new Dictionary<LogObject, string>();
         private SplitterMemory mem;
         private SplitterSettings settings;
-        private int currentSplit = -1, lastLogCheck = 0;
+        private int currentSplit = -1, lastLogCheck = 0, lastPlaythroughs = 0;
         private int lastBossHP = 0, lastMaxBossHP = 0, lastHP = 0, lastGold = 0, lastCheckpoint = 0, bossKills = 0;
         private Level lastLevel, lastLevelLoading;
         private bool hasLog = false;
@@ -71,7 +71,9 @@ namespace LiveSplit.ShovelKnight {
             Level levelLoading = mem.LevelIDLoading();
 
             if (currentSplit == -1) {
-                shouldSplit = level == Level.ProfileSelect && levelLoading == Level.IntroCinematic;
+                int playthroughs = mem.Playthroughs();
+                shouldSplit = level == Level.ProfileSelect && playthroughs > lastPlaythroughs;
+                lastPlaythroughs = playthroughs;
             } else if (Model.CurrentState.CurrentPhase == TimerPhase.Running) {
                 if (currentSplit < Model.CurrentState.Run.Count && currentSplit < settings.Splits.Count) {
                     SplitName split = settings.Splits[currentSplit];

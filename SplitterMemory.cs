@@ -17,6 +17,9 @@ namespace LiveSplit.ShovelKnight {
         public Character Character() {
             return (Character)Program.Read<int>(BaseAddress, 0x8c0348).GetValueOrDefault(0);
         }
+        public int Playthroughs() {
+            return Program.Read<int>(BaseAddress, 0x8c02e8).GetValueOrDefault(0);
+        }
         public Level LevelID() {
             return (Level)Program.Read<int>(BaseAddress, 0x9172ec).GetValueOrDefault(0);
         }

@@ -121,6 +121,20 @@ namespace LiveSplit.ShovelKnight {
         BackyardLab,
         [Description("Enchanted Conclave (Complete)"), ToolTip("Splits when completing Enchanted Conclave (King Knight)")]
         EnchantedConclave,
+        [Description("Sunken Town (Complete)"), ToolTip("Splits when completing Sunken Town (King Knight)")]
+        SunkenTown,
+        [Description("Ectoplasm Chasm (Complete)"), ToolTip("Splits when completing Ectoplasm Chasm (King Knight)")]
+        EctoplasmChasm,
+        [Description("Eerie Manor (Complete)"), ToolTip("Splits when completing Eerie Manor (King Knight)")]
+        EerieManor,
+        [Description("Duelists Grave (Complete)"), ToolTip("Splits when completing Duelists Grave (King Knight)")]
+        DuelistsGrave,
+        [Description("Bounding Battlements (Complete)"), ToolTip("Splits when completing Bounding Battlements (King Knight)")]
+        BoundingBattlements,
+        [Description("Turncoats Tower (Complete)"), ToolTip("Splits when completing Turncoats Tower (King Knight)")]
+        TurncoatsTower,
+        [Description("Joustus House 1 (Complete)"), ToolTip("Splits when completing Joustus House 1 (King Knight)")]
+        CardHouse1,
         [Description("King Pridemoor - King Knight (Kill)"), ToolTip("Splits when killing King Pridemoor")]
         KingPridemoorKill,
         [Description("King Pridemoor - King Knight (Gold)"), ToolTip("Splits when getting gold from King Pridemoor")]
@@ -134,6 +148,26 @@ namespace LiveSplit.ShovelKnight {
         PressurePlant,
         [Description("Ratsploder Runway (Complete)"), ToolTip("Splits when completing Ratsploder Runway (King Knight)")]
         RatsploderRunway,
+        [Description("Bubbling Bayou (Complete)"), ToolTip("Splits when completing Bubbling Bayou (King Knight)")]
+        BubblingBayou,
+        [Description("Excavation Station (Complete)"), ToolTip("Splits when completing Excavation Station (King Knight)")]
+        ExcavationStation,
+        [Description("Bohtos Big Bounce (Complete)"), ToolTip("Splits when completing Bohtos Big Bounce (King Knight)")]
+        BohtosBigBounce,
+        [Description("Alchemical Aqueducts (Complete)"), ToolTip("Splits when completing Alchemical Aqueducts (King Knight)")]
+        AlchemicalAqueducts,
+        [Description("Volcanic Vault (Complete)"), ToolTip("Splits when completing Volcanic Vault (King Knight)")]
+        VolcanicVault,
+        [Description("Sprinters Shoals (Complete)"), ToolTip("Splits when completing Sprinters Shoals (King Knight)")]
+        SprintersShoals,
+        [Description("Deep Sea Trench (Complete)"), ToolTip("Splits when completing Deep Sea Trench (King Knight)")]
+        DeepSeaTrench,
+        [Description("Goo Gorge (Complete)"), ToolTip("Splits when completing Goo Gorge (King Knight)")]
+        GooGorge,
+        [Description("Axolongl Alcove (Complete)"), ToolTip("Splits when completing Axolongl Alcove (King Knight)")]
+        AxolonglAlcove,
+        [Description("Joustus Hosue 2 (Complete)"), ToolTip("Splits when completing Joustus Hosue 2 (King Knight)")]
+        CardHouse2,
         [Description("Troupple King - King Knight (Kill)"), ToolTip("Splits when killing Troupple King")]
         TrouppleKingKill,
         [Description("Troupple King - King Knight (Gold)"), ToolTip("Splits when getting gold from Troupple King")]
@@ -147,17 +181,31 @@ namespace LiveSplit.ShovelKnight {
         CycloneSierra,
         [Description("Heavyweight Heights (Complete)"), ToolTip("Splits when completing Heavyweight Heights (King Knight)")]
         HeavyweightHeights,
+        [Description("Slippery Summit (Complete)"), ToolTip("Splits when completing Slippery Summit (King Knight)")]
+        SlipperySummit,
+        [Description("Spinwulf Sactuary (Complete)"), ToolTip("Splits when completing Spinwulf Sactuary (King Knight)")]
+        SpinwulfSactuary,
+        [Description("Aerial Brigade (Complete)"), ToolTip("Splits when completing Aerial Brigade (King Knight)")]
+        AerialBrigade,
+        [Description("Ladder Factory (Complete)"), ToolTip("Splits when completing Ladder Factory (King Knight)")]
+        LadderFactory,
+        [Description("Void Crater (Complete)"), ToolTip("Splits when completing Void Crater (King Knight)")]
+        VoidCrater,
+        [Description("Joustus House 3 (Complete)"), ToolTip("Splits when completing Joustus House 3 (King Knight)")]
+        CardHouse3,
         [Description("King Birder - King Knight (Kill)"), ToolTip("Splits when killing Troupple King")]
         KingBirderKill,
         [Description("King Birder - King Knight (Gold)"), ToolTip("Splits when getting gold from Troupple King")]
         KingBirderGold,
-
+        
         [Description("Shrouded Spires (Complete)"), ToolTip("Splits when completing Shrouded Spires (King Knight)")]
         ShroudedSpires,
         [Description("Lava Well (Complete)"), ToolTip("Splits when completing Lava Well (King Knight)")]
         LavaWell,
         [Description("Warp Wrap Keep (Complete)"), ToolTip("Splits when completing Warp Wrap Keep (King Knight)")]
-        WarpWrapKeep
+        WarpWrapKeep,
+        [Description("Joustus House 4 (Complete)"), ToolTip("Splits when completing Joustus House 4 (King Knight)")]
+        CardHouse4
     }
     public enum Character {
         ShovelKnight = 0,
@@ -188,7 +236,7 @@ namespace LiveSplit.ShovelKnight {
         GrandHall = 32,
         BackyardLab = 33,
         DuelistsGrave = 34,
-        TurnCoatsTower = 35,
+        TurncoatsTower = 35,
         CardHouse1 = 36,
         KingWorld1Gem = 37,
         SeersStudy = 38,

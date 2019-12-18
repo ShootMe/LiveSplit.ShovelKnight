@@ -85,7 +85,7 @@ namespace LiveSplit.ShovelKnight {
                     int checkpoint = mem.Checkpoint();
 
                     switch (split) {
-                        case SplitName.BossEndOverworld: shouldSplit = (levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel != Level.Overworld && lastLevel != Level.Glidewing) || (levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage && lastLevel != Level.DarkVillage) || (levelLoading == Level.Glidewing && lastLevelLoading != Level.Glidewing && lastLevel != Level.Glidewing); break;
+                        case SplitName.BossEndOverworld: shouldSplit = ReturnToOverworld(levelLoading); break;
                         case SplitName.EnterLevel: shouldSplit = (levelLoading != Level.None && levelLoading != Level.MainMenu && levelLoading != Level.CompanyLogo && lastLevelLoading == Level.None) && (level == Level.Overworld || level == Level.DarkVillage); break;
                         case SplitName.MemoryOverworld: shouldSplit = (level == Level.SepiaTowerIntro || level == Level.SepiaTowerOfDeath || level == Level.SepiaCampFire || level == Level.SepiaTowerShieldKnight) && ((levelLoading == Level.Overworld && lastLevel != Level.Overworld) || (levelLoading == Level.DarkVillage && lastLevel != Level.DarkVillage)); break;
                         case SplitName.BossGainHP: shouldSplit = bossHP >= 10 && maxBossHP >= 2 && lastMaxBossHP == 0; break;
@@ -150,19 +150,19 @@ namespace LiveSplit.ShovelKnight {
                             break;
 
                         case SplitName.Enchantress1Kill:
-                            if (bossKills == 0 && level == Level.TowerOfFateEnchantress && BossKilled(bossHP, maxBossHP, HP)) {
+                            if (bossKills == 0 && (level == Level.TowerOfFateEnchantress || level == Level.KingEnchantress) && BossKilled(bossHP, maxBossHP, HP)) {
                                 bossKills++;
                                 shouldSplit = true;
                             }
                             break;
                         case SplitName.Enchantress2Kill:
-                            if (bossKills < 2 && level == Level.TowerOfFateEnchantress && BossKilled(bossHP, maxBossHP, HP)) {
+                            if (bossKills < 2 && (level == Level.TowerOfFateEnchantress || level == Level.KingEnchantress) && BossKilled(bossHP, maxBossHP, HP)) {
                                 bossKills++;
                                 shouldSplit = bossKills == 2;
                             }
                             break;
                         case SplitName.Enchantress3Kill:
-                            if (bossKills < 3 && level == Level.TowerOfFateEnchantress && BossKilled(bossHP, maxBossHP, HP)) {
+                            if (bossKills < 3 && (level == Level.TowerOfFateEnchantress || level == Level.KingEnchantress) && BossKilled(bossHP, maxBossHP, HP)) {
                                 bossKills++;
                                 shouldSplit = bossKills == 3;
                             }
@@ -176,31 +176,55 @@ namespace LiveSplit.ShovelKnight {
 
                         case SplitName.ShieldKnightKill: shouldSplit = level == Level.SepiaTowerShieldKnight && mem.Character() == Character.SpecterKnight && BossKilled(bossHP, maxBossHP, HP); break;
 
-                        case SplitName.ValleyOfDawn: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.ValleyOfDawn; break;
-                        case SplitName.MossyMountain: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.MossyMountain; break;
-                        case SplitName.SpectralRavine: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.SpectralRavine; break;
-                        case SplitName.BackyardLab: shouldSplit = levelLoading == Level.PlainsMorningEnd && lastLevelLoading != Level.PlainsMorningEnd && lastLevel == Level.BackyardLab; break;
-                        case SplitName.EnchantedConclave: shouldSplit = levelLoading == Level.PridemoorEnd && lastLevelLoading != Level.PridemoorEnd && lastLevel == Level.EnchantedConclave; break;
+                        case SplitName.ValleyOfDawn: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.ValleyOfDawn; break;
+                        case SplitName.MossyMountain: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.MossyMountain; break;
+                        case SplitName.SpectralRavine: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.SpectralRavine; break;
+                        case SplitName.BackyardLab: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.BackyardLab; break;
+                        case SplitName.EnchantedConclave: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.EnchantedConclave; break;
+                        case SplitName.SunkenTown: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.SunkenTown; break;
+                        case SplitName.EctoplasmChasm: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.EctoplasmChasm; break;
+                        case SplitName.EerieManor: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.EerieManor; break;
+                        case SplitName.DuelistsGrave: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.DuelistsGrave; break;
+                        case SplitName.BoundingBattlements: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.BoundingBattlements; break;
+                        case SplitName.TurncoatsTower: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.TurncoatsTower; break;
+                        case SplitName.CardHouse1: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.CardHouse1; break;
                         case SplitName.KingPridemoorKill: shouldSplit = level == Level.GrandHall && mem.Character() == Character.KingKnight && BossKilled(bossHP, maxBossHP, HP); break;
                         case SplitName.KingPridemoorGold: shouldSplit = level == Level.GrandHall && mem.Character() == Character.KingKnight && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-                        case SplitName.FloatingFrogFen: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.FloatingFrogFen; break;
-                        case SplitName.LunkerothsLagoon: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.LunkerothsLagoon; break;
-                        case SplitName.PressurePlant: shouldSplit = levelLoading == Level.ExplodatoriumEnd && lastLevelLoading != Level.ExplodatoriumEnd && lastLevel == Level.PressurePlant; break;
-                        case SplitName.RatsploderRunway: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.RatsploderRunway; break;
+                        case SplitName.FloatingFrogFen: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.FloatingFrogFen; break;
+                        case SplitName.LunkerothsLagoon: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.LunkerothsLagoon; break;
+                        case SplitName.PressurePlant: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.PressurePlant; break;
+                        case SplitName.RatsploderRunway: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.RatsploderRunway; break;
+                        case SplitName.BubblingBayou: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.BubblingBayou; break;
+                        case SplitName.ExcavationStation: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.ExcavationStation; break;
+                        case SplitName.BohtosBigBounce: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.BohtosBigBounce; break;
+                        case SplitName.AlchemicalAqueducts: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.AlchemicalAqueducts; break;
+                        case SplitName.VolcanicVault: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.VolcanicVault; break;
+                        case SplitName.SprintersShoals: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.SprintersShoals; break;
+                        case SplitName.DeepSeaTrench: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.DeepSeaTrench; break;
+                        case SplitName.GooGorge: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.GooGorge; break;
+                        case SplitName.AxolonglAlcove: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.AxolonglAlcove; break;
+                        case SplitName.CardHouse2: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.CardHouse2; break;
                         case SplitName.TrouppleKingKill: shouldSplit = level == Level.RoyalPond && mem.Character() == Character.KingKnight && BossKilled(bossHP, maxBossHP, HP); break;
                         case SplitName.TrouppleKingGold: shouldSplit = level == Level.RoyalPond && mem.Character() == Character.KingKnight && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-                        case SplitName.TorqueLiftTorsion: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.TorqueLiftTorsion; break;
-                        case SplitName.ShockAssembly: shouldSplit = levelLoading == Level.ClockworkEnd && lastLevelLoading != Level.ClockworkEnd && lastLevel == Level.ShockAssembly; break;
-                        case SplitName.CycloneSierra: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.CycloneSierra; break;
-                        case SplitName.HeavyweightHeights: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.HeavyweightHeights; break;
+                        case SplitName.TorqueLiftTorsion: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.TorqueLiftTorsion; break;
+                        case SplitName.ShockAssembly: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.ShockAssembly; break;
+                        case SplitName.CycloneSierra: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.CycloneSierra; break;
+                        case SplitName.HeavyweightHeights: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.HeavyweightHeights; break;
+                        case SplitName.SlipperySummit: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.SlipperySummit; break;
+                        case SplitName.SpinwulfSactuary: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.SpinwulfSactuary; break;
+                        case SplitName.AerialBrigade: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.AerialBrigade; break;
+                        case SplitName.LadderFactory: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.LadderFactory; break;
+                        case SplitName.VoidCrater: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.VoidCrater; break;
+                        case SplitName.CardHouse3: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.CardHouse3; break;
                         case SplitName.KingBirderKill: shouldSplit = level == Level.KingsRoost && mem.Character() == Character.KingKnight && BossKilled(bossHP, maxBossHP, HP); break;
                         case SplitName.KingBirderGold: shouldSplit = level == Level.KingsRoost && mem.Character() == Character.KingKnight && BossGold(bossHP, maxBossHP, HP, gold); break;
 
-                        case SplitName.ShroudedSpires: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.ShroudedSpires; break;
-                        case SplitName.LavaWell: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.LavaWell; break;
-                        case SplitName.WarpWrapKeep: shouldSplit = levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel == Level.WarpWrapKeep; break;
+                        case SplitName.ShroudedSpires: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.ShroudedSpires; break;
+                        case SplitName.LavaWell: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.LavaWell; break;
+                        case SplitName.WarpWrapKeep: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.WarpWrapKeep; break;
+                        case SplitName.CardHouse4: shouldSplit = ReturnToOverworld(levelLoading) && lastLevel == Level.CardHouse4; break;
                     }
 
                     if (shouldSplit && split.ToString().IndexOf("Kill") > 0 && split != SplitName.TinkerKnightFirstKill && split != SplitName.TinkerKnightKill && split != SplitName.BossRushKill && split != SplitName.Enchantress1Kill && split != SplitName.Enchantress2Kill && split != SplitName.Enchantress3Kill) {
@@ -218,10 +242,15 @@ namespace LiveSplit.ShovelKnight {
             if ((level != lastLevel && level != Level.RespawnScreen && lastLevel != Level.RespawnScreen) || (lastHP == 0 && level != Level.TowerOfFateEnchantress && level != Level.RespawnScreen)) {
                 bossKills = 0;
             }
-            HandleSplit(shouldSplit, (lastLevel != Level.MainMenu && level == Level.MainMenu) || (lastLevel != Level.ProfileSelect && level == Level.ProfileSelect));
+            HandleSplit(shouldSplit, false);
 
             lastLevel = level;
             lastLevelLoading = levelLoading;
+        }
+        private bool ReturnToOverworld(Level levelLoading) {
+            return (levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel != Level.Overworld && lastLevel != Level.Glidewing)
+                || (levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage && lastLevel != Level.DarkVillage)
+                || (levelLoading >= Level.FloatEnd && levelLoading <= Level.TowerOfFateEnd && lastLevelLoading < Level.FloatEnd && lastLevelLoading > Level.TowerOfFateEnd && lastLevel != Level.Overworld);
         }
         private bool BossKilled(int? bossHP, int? maxBossHP, int? HP) {
             return bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 12;

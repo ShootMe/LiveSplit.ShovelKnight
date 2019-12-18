@@ -266,6 +266,7 @@ namespace LiveSplit.ShovelKnight {
                             }
                             break;
                         case LogObject.BossKills: curr = bossKills.ToString(); break;
+                        case LogObject.Playthroughs: curr = mem.Playthroughs().ToString(); break;
                         case LogObject.Level: curr = mem.LevelID().ToString(); break;
                         case LogObject.LevelName: curr = mem.LevelName(); break;
                         case LogObject.LevelLoad: curr = mem.LevelIDLoading().ToString(); break;

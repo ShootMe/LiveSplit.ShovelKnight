@@ -16,7 +16,8 @@ namespace LiveSplit.ShovelKnight {
         Checkpoint,
         LevelTimer,
         Pos,
-        IFrames
+        IFrames,
+        Playthroughs
     }
     public enum SplitName {
         [Description("Manual Split (Not Automatic)"), ToolTip("Does not split automatically. Use this for custom splits not yet defined.")]

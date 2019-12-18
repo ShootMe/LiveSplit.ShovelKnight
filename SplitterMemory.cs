@@ -8,6 +8,7 @@ namespace LiveSplit.ShovelKnight {
         public bool IsHooked { get; set; } = false;
         public IntPtr BaseAddress { get; set; }
         public DateTime LastHooked;
+        private static int mainAddress = 0x8b6710;
 
         public SplitterMemory() {
             LastHooked = DateTime.MinValue;
@@ -15,68 +16,68 @@ namespace LiveSplit.ShovelKnight {
         }
 
         public Character Character() {
-            return (Character)Program.Read<int>(BaseAddress, 0x8c0348).GetValueOrDefault(0);
+            return (Character)Program.Read<int>(BaseAddress, mainAddress + 0xac38).GetValueOrDefault(0);
         }
         public int Playthroughs() {
-            return Program.Read<int>(BaseAddress, 0x8c02e8).GetValueOrDefault(0);
+            return Program.Read<int>(BaseAddress, mainAddress + 0xabd8).GetValueOrDefault(0);
         }
         public Level LevelID() {
-            return (Level)Program.Read<int>(BaseAddress, 0x9172ec).GetValueOrDefault(0);
+            return (Level)Program.Read<int>(BaseAddress, mainAddress + 0x61bdc).GetValueOrDefault(0);
         }
         public string LevelName() {
-            return Program.ReadAscii((IntPtr)Program.Read<uint>(BaseAddress, 0x9172e0) + 0x3c);
+            return Program.ReadAscii((IntPtr)Program.Read<uint>(BaseAddress, mainAddress + 0x61bd0) + 0x3c);
         }
         public Level LevelIDLoading() {
-            return (Level)Program.Read<int>(BaseAddress, 0x9172f0).GetValueOrDefault(0);
+            return (Level)Program.Read<int>(BaseAddress, mainAddress + 0x61be0).GetValueOrDefault(0);
         }
         public void LevelIDLoading(Level level) {
-            Program.Write<int>(BaseAddress, (int)level, 0x9172f0);
+            Program.Write<int>(BaseAddress, (int)level, mainAddress + 0x61be0);
         }
         public int? Gold() {
-            return Program.Read<int>(BaseAddress, 0x8b5710, 0x3dc);
+            return Program.Read<int>(BaseAddress, mainAddress, 0x3dc);
         }
         public int ExtraItems() {
-            return Program.Read<int>(BaseAddress, 0x8d25e0).GetValueOrDefault(0);
+            return Program.Read<int>(BaseAddress, mainAddress + 0x1ced0).GetValueOrDefault(0);
         }
         public int? Mana() {
-            return Program.Read<byte>(BaseAddress, 0x8b5710, 0x3d8);
+            return Program.Read<byte>(BaseAddress, mainAddress, 0x3d8);
         }
         public float? LevelTimer() {
-            return Program.Read<float>(BaseAddress, 0x8b5710, 0x2c, 0x48);
+            return Program.Read<float>(BaseAddress, mainAddress, 0x2c, 0x48);
         }
         public float? IFrameDuration() {
-            return Program.Read<float>(BaseAddress, 0x8b5710, 0x200);
+            return Program.Read<float>(BaseAddress, mainAddress, 0x200);
         }
         public int? HP() {
-            return (int?)Program.Read<float>(BaseAddress, 0x8b5710, 0xe8);
+            return (int?)Program.Read<float>(BaseAddress, mainAddress, 0xe8);
         }
         public int? MaxHP() {
-            return (int?)Program.Read<float>(BaseAddress, 0x8b5710, 0xec);
+            return (int?)Program.Read<float>(BaseAddress, mainAddress, 0xec);
         }
         public PointF? Position() {
-            float? x = Program.Read<float>(BaseAddress, 0x8b5710, 0x30, 0x24, 0xc);
-            float? y = Program.Read<float>(BaseAddress, 0x8b5710, 0x30, 0x24, 0x10);
+            float? x = Program.Read<float>(BaseAddress, mainAddress, 0x30, 0x24, 0xc);
+            float? y = Program.Read<float>(BaseAddress, mainAddress, 0x30, 0x24, 0x10);
             if (x.HasValue && y.HasValue) {
                 return new PointF(x.Value, y.Value);
             }
             return null;
         }
         public void Position(float x, float y) {
-            Program.Write<float>(BaseAddress, x, 0x8b5710, 0x30, 0x24, 0xc);
-            Program.Write<float>(BaseAddress, y, 0x8b5710, 0x30, 0x24, 0x10);
+            Program.Write<float>(BaseAddress, x, mainAddress, 0x30, 0x24, 0xc);
+            Program.Write<float>(BaseAddress, y, mainAddress, 0x30, 0x24, 0x10);
         }
         public int? BossHP() {
             //First Enemy HP
-            //Program.Read<float>(BaseAddress, 0x8b5710, 0x2c, 0x4, 0x0, 0xa0, 0x164);
+            //Program.Read<float>(BaseAddress, mainAddress, 0x2c, 0x4, 0x0, 0xa0, 0x164);
 
             //Boss UI HP
-            return (int?)Program.Read<byte>(BaseAddress, 0x8b5710, 0x2c, 0x1e4, 0x650, 0x41);
+            return (int?)Program.Read<byte>(BaseAddress, mainAddress, 0x2c, 0x1e4, 0x650, 0x41);
         }
         public int? BossMaxHP() {
-            return (int?)Program.Read<byte>(BaseAddress, 0x8b5710, 0x2c, 0x1e4, 0x650, 0x40);
+            return (int?)Program.Read<byte>(BaseAddress, mainAddress, 0x2c, 0x1e4, 0x650, 0x40);
         }
         public int Checkpoint() {
-            return Program.Read<int>(BaseAddress, 0x8d45d8).GetValueOrDefault(0);
+            return Program.Read<int>(BaseAddress, mainAddress + 0x1eec8).GetValueOrDefault(0);
         }
 
         public bool HookProcess() {

@@ -250,7 +250,7 @@ namespace LiveSplit.ShovelKnight {
         private bool ReturnToOverworld(Level levelLoading) {
             return (levelLoading == Level.Overworld && lastLevelLoading != Level.Overworld && lastLevel != Level.Overworld && lastLevel != Level.Glidewing)
                 || (levelLoading == Level.DarkVillage && lastLevelLoading != Level.DarkVillage && lastLevel != Level.DarkVillage)
-                || (levelLoading >= Level.FloatEnd && levelLoading <= Level.TowerOfFateEnd && lastLevelLoading < Level.FloatEnd && lastLevelLoading > Level.TowerOfFateEnd && lastLevel != Level.Overworld);
+                || (levelLoading >= Level.FloatEnd && levelLoading <= Level.TowerOfFateEnd && (lastLevelLoading < Level.FloatEnd || lastLevelLoading > Level.TowerOfFateEnd) && lastLevel != Level.Overworld);
         }
         private bool BossKilled(int? bossHP, int? maxBossHP, int? HP) {
             return bossHP == 0 && lastBossHP > 0 && HP > 0 && lastHP > 0 && maxBossHP >= 12;

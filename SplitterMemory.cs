@@ -8,7 +8,7 @@ namespace LiveSplit.ShovelKnight {
         public bool IsHooked { get; set; } = false;
         public IntPtr BaseAddress { get; set; }
         public DateTime LastHooked;
-        private static int mainAddress = 0x8d3318;
+        private static int mainAddress = 0x8D2318;
 
         public SplitterMemory() {
             LastHooked = DateTime.MinValue;
@@ -19,7 +19,7 @@ namespace LiveSplit.ShovelKnight {
             return (Character)Program.Read<int>(BaseAddress, mainAddress + 0xac38).GetValueOrDefault(0);
         }
         public int Playthroughs() {
-            return Program.Read<int>(BaseAddress, mainAddress + 0xabd8).GetValueOrDefault(0);
+            return Program.Read<int>(BaseAddress, mainAddress + 0xabd4).GetValueOrDefault(0);
         }
         public Level LevelID() {
             return (Level)Program.Read<int>(BaseAddress, mainAddress + 0x61d64).GetValueOrDefault(0);

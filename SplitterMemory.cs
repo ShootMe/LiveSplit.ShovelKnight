@@ -22,16 +22,16 @@ namespace LiveSplit.ShovelKnight {
             return Program.Read<int>(BaseAddress, mainAddress + 0xabd4).GetValueOrDefault(0);
         }
         public Level LevelID() {
-            return (Level)Program.Read<int>(BaseAddress, mainAddress + 0x61d64).GetValueOrDefault(0);
+            return (Level)Program.Read<int>(BaseAddress, mainAddress + 0x61d6c).GetValueOrDefault(0);
         }
         public string LevelName() {
-            return Program.ReadAscii((IntPtr)Program.Read<uint>(BaseAddress, mainAddress + 0x61d58) + 0x3c);
+            return Program.ReadAscii((IntPtr)Program.Read<uint>(BaseAddress, mainAddress + 0x61d60) + 0x3c);
         }
         public Level LevelIDLoading() {
-            return (Level)Program.Read<int>(BaseAddress, mainAddress + 0x61d68).GetValueOrDefault(0);
+            return (Level)Program.Read<int>(BaseAddress, mainAddress + 0x61d70).GetValueOrDefault(0);
         }
         public void LevelIDLoading(Level level) {
-            Program.Write<int>(BaseAddress, (int)level, mainAddress + 0x61d68);
+            Program.Write<int>(BaseAddress, (int)level, mainAddress + 0x61d70);
         }
         public int? Gold() {
             return Program.Read<int>(BaseAddress, mainAddress, 0x3dc);
@@ -77,7 +77,7 @@ namespace LiveSplit.ShovelKnight {
             return (int?)Program.Read<byte>(BaseAddress, mainAddress, 0x2c, 0x1e4, 0x650, 0x40);
         }
         public int Checkpoint() {
-            return Program.Read<int>(BaseAddress, mainAddress + 0x1eec8).GetValueOrDefault(0);
+            return Program.Read<int>(BaseAddress, mainAddress + 0x1ef34).GetValueOrDefault(0);
         }
 
         public bool HookProcess() {

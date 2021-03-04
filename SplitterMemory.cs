@@ -8,7 +8,7 @@ namespace LiveSplit.ShovelKnight {
         public bool IsHooked { get; set; } = false;
         public IntPtr BaseAddress { get; set; }
         public DateTime LastHooked;
-        private static int mainAddress = 0x8D2318;
+        private static int mainAddress = 0x8D4398;
 
         public SplitterMemory() {
             LastHooked = DateTime.MinValue;

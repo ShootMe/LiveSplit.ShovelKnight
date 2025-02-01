@@ -70,6 +70,21 @@ namespace LiveSplit.ShovelKnight {
             Level level = mem.LevelID();
             Level levelLoading = mem.LevelIDLoading();
 
+            int? bossHP = mem.BossHP();
+            int? maxBossHP = mem.BossMaxHP();
+            int? HP = mem.HP();
+            int? maxHP = mem.MaxHP();
+            int? gold = mem.Gold();
+            int checkpoint = mem.Checkpoint();
+
+            Model.CurrentState.Run.Metadata.SetCustomVariable("Level", $"{level}");
+            Model.CurrentState.Run.Metadata.SetCustomVariable("BossHP", bossHP.HasValue ? $"{bossHP} / {maxBossHP}" : null);
+            Model.CurrentState.Run.Metadata.SetCustomVariable("PlayerHP", HP.HasValue ? $"{HP} / {maxHP}" : null);
+            Model.CurrentState.Run.Metadata.SetCustomVariable("Checkpoint", $"{checkpoint}");
+            Model.CurrentState.Run.Metadata.SetCustomVariable("PlayerGold", $"{gold}");
+            Model.CurrentState.Run.Metadata.SetCustomVariable("PlayerMana", $"{mem.Mana()}");
+            Model.CurrentState.Run.Metadata.SetCustomVariable("Character", $"{mem.Character()}");
+
             if (currentSplit == -1) {
                 int playthroughs = mem.Playthroughs();
                 shouldSplit = level == Level.ProfileSelect && playthroughs > lastPlaythroughs;
@@ -77,13 +92,7 @@ namespace LiveSplit.ShovelKnight {
             } else if (Model.CurrentState.CurrentPhase == TimerPhase.Running) {
                 if (currentSplit < Model.CurrentState.Run.Count && currentSplit < settings.Splits.Count) {
                     SplitName split = settings.Splits[currentSplit];
-
-                    int? bossHP = mem.BossHP();
-                    int? maxBossHP = mem.BossMaxHP();
-                    int? HP = mem.HP();
-                    int? gold = mem.Gold();
-                    int checkpoint = mem.Checkpoint();
-
+                    
                     switch (split) {
                         case SplitName.BossEndOverworld: shouldSplit = ReturnToOverworld(levelLoading); break;
                         case SplitName.EnterLevel: shouldSplit = (levelLoading != Level.None && levelLoading != Level.MainMenu && levelLoading != Level.CompanyLogo && lastLevelLoading == Level.None) && (level == Level.Overworld || level == Level.DarkVillage); break;

@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <updates>
+	<update version="1.2.6">
+		<files>
+			<file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
+		</files>
+		<changelog>
+			<change> Set custom variables for external access Level / Checkpoint / Character / PlayerHP / PlayerGold / PlayerMana / BossHP </change>
+		</changelog>
+	</update>
     <update version="1.2.5">
         <files>
             <file path="Components/LiveSplit.ShovelKnight.dll" status="changed"/>
